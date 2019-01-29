@@ -1,5 +1,6 @@
 package com.ittzg.cloud.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -13,6 +14,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="tb_brand")
 @ApiModel
+@JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
 public class Brand {
     @ApiModelProperty(value = "品牌的id",notes = "品牌的id",example = "1")
     private Long id;

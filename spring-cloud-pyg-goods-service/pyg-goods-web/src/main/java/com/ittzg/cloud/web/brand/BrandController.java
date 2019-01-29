@@ -44,7 +44,7 @@ public class BrandController {
     @ApiOperation(value = "查询当前页所有的品牌",notes = "查询当前页所有的品牌")
     public Map<String,Object> getAllBrandByPage(@PathVariable(value = "pageSize",required = true)  Integer pageSize,
                                          @PathVariable(value = "PageNum",required = true)  Integer PageNum){
-        logger.info("url:/brand/{}/{},method:{}",pageSize,PageNum,"com.ittzg.cloud.web.brand.BrandController.getAllBrandByPage");
+        logger.info("url:/brand/getAllBrandByPage/{}/{},method:{}",pageSize,PageNum,"com.ittzg.cloud.web.brand.BrandController.getAllBrandByPage");
         long begin = System.currentTimeMillis();
         Page<Brand> brandsPage = brandService.getBrandsByPage(pageSize, PageNum);
         List<Brand> brands = brandsPage.getContent();
@@ -56,6 +56,26 @@ public class BrandController {
         logger.info("获取该页品牌列表花费的时间为：{}ms",System.currentTimeMillis()-begin);
         logger.info("response {}", JSON.toJSON(brands).toString());
         return map;
+    }
+    @PostMapping(value = "addOrUpdateBrand")
+    @ApiOperation(value = "新增或修改品牌",notes = "新增或修改品牌")
+    public Map<Boolean,String> addOrUpdateBrand(@RequestBody Brand brand){
+        logger.info("url:/brand/addBrand.method:{}","com.ittzg.cloud.web.brand.BrandController.addOrUpdateBrand");
+        long begin = System.currentTimeMillis();
+        Map<Boolean, String> map = brandService.addBrand(brand);
+        logger.info("添加品牌花费的时间为：{}ms",System.currentTimeMillis()-begin);
+        logger.info("response {}", map.toString());
+        return map;
+    }
+    @GetMapping(value = "queryOneById")
+    @ApiOperation(value = "查找品牌详情",notes = "查找品牌详情")
+    public Brand queryOneById(long id){
+        logger.info("url:/brand/queryOneById .method:{}","com.ittzg.cloud.web.brand.BrandController.queryOneById");
+        long begin = System.currentTimeMillis();
+        Brand brand = brandService.findOneById(id);
+        logger.info("查找品牌花费的时间为：{}ms",System.currentTimeMillis()-begin);
+        logger.info("response {}", JSON.toJSON(brand).toString());
+        return brand;
     }
 
 }

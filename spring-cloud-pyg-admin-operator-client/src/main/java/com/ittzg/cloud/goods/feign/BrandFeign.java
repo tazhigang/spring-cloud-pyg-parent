@@ -3,9 +3,7 @@ package com.ittzg.cloud.goods.feign;
 import com.ittzg.cloud.dto.response.goods.brand.Brand;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -19,8 +17,12 @@ import java.util.Map;
 @FeignClient(name = "SPRING-CLOUD-PYG-GOODS-SERVICE")
 public interface BrandFeign {
     @RequestMapping(value = "/brand/getAllBrand", method = RequestMethod.GET)
-    public List<Brand> getAll();
+    List<Brand> getAll();
     @RequestMapping(value = "/brand/getAllBrandByPage/{pageSize}/{PageNum}", method = RequestMethod.GET)
-    public Map<String,Object> getBrandsByPage(@PathVariable(value = "pageSize")  Integer pageSize,
+    Map<String,Object> getBrandsByPage(@PathVariable(value = "pageSize")  Integer pageSize,
                                                @PathVariable(value = "PageNum")  Integer PageNum);
+    @RequestMapping(value = "/brand/addOrUpdateBrand",method = RequestMethod.POST)
+    Map<Boolean,String> addOrUpdateBrand(@RequestBody Brand brand);
+    @RequestMapping(value = "/brand/queryOneById",method = RequestMethod.GET)
+    Brand findOne(@RequestParam(value = "id") long id);
 }

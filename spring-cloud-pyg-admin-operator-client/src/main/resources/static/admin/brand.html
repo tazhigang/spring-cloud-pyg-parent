@@ -36,14 +36,32 @@
                     $scope.reloadList();
                 }
             };
+            //分页
             $scope.findByPage=function(page,rows){
                 $http.get("/brand/getBrandPageResult/"+page+"/"+rows).then(function(response){
                     $scope.brands = response.data.resultData.rows;
                     $scope.paginationConf.totalItems=response.data.resultData.total;
 				})
 			}
-
-
+			//添加
+			$scope.addOrUpdateBrand=function(){
+                $http.post("/brand/addOrUpdateBrand",$scope.brand).then(function(response){
+                    if(response.data.resultData.success){
+                        $scope.reloadList();
+					}else{
+                        alert(response.data.resultData.responseMsg);
+					}
+				},function(response) {
+                    alert("连接失败")
+                })
+			}
+			$scope.findOne=function(id){
+                $http.get("/brand/findById?id="+id).then(function(response){
+                    $scope.brand = response.data.resultData;
+                },function(response) {
+                    alert("连接失败")
+                })
+			}
         });
 	</script>
 
@@ -97,7 +115,7 @@
 									      <td>{{brand.name}}</td>
 		                                  <td>{{brand.firstChar}}</td>
 		                                  <td class="text-center">                                           
-		                                 	  <button type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal"  >修改</button>                                           
+		                                 	  <button type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal" ng-click="findOne(brand.id)" >修改</button>
 		                                  </td>
 			                          </tr>
 			                      </tbody>
@@ -126,16 +144,16 @@
 			<table class="table table-bordered table-striped"  width="800px">
 		      	<tr>
 		      		<td>品牌名称</td>
-		      		<td><input  class="form-control" placeholder="品牌名称" >  </td>
+		      		<td><input  class="form-control" placeholder="品牌名称" ng-model="brand.name">  </td>
 		      	</tr>		      	
 		      	<tr>
 		      		<td>首字母</td>
-		      		<td><input  class="form-control" placeholder="首字母">  </td>
+		      		<td><input  class="form-control" placeholder="首字母" ng-model="brand.firstChar">  </td>
 		      	</tr>		      	
 			 </table>				
 		</div>
 		<div class="modal-footer">						
-			<button class="btn btn-success" data-dismiss="modal" aria-hidden="true">保存</button>
+			<button class="btn btn-success" data-dismiss="modal" aria-hidden="true" ng-click="addOrUpdateBrand()">保存</button>
 			<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
 		</div>
 	  </div>

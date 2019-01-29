@@ -1,11 +1,11 @@
 package com.ittzg.cloud.bid.brand;
 
 import com.ittzg.cloud.model.Brand;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.Map;
+
 /**
  * @Author: ittzg
  * @CreateDate: 2019/1/27 15:12
@@ -25,4 +25,18 @@ public interface BrandService {
      * @return 当前页品牌列表
      */
     Page<Brand> getBrandsByPage(Integer pageSize, Integer PageNum);
+
+    /**
+     *  添加品牌
+     * @param brand
+     * @return
+     */
+    Map<Boolean,String> addBrand(Brand brand);
+
+    /**
+     * 查一个
+     * @param id
+     * @return
+     */
+    Brand findOneById(Long id);
 }

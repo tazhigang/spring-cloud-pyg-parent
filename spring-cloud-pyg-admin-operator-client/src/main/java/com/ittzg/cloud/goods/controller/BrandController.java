@@ -3,6 +3,7 @@ package com.ittzg.cloud.goods.controller;
 import com.alibaba.fastjson.JSON;
 import com.ittzg.cloud.dto.response.Result;
 import com.ittzg.cloud.dto.response.goods.brand.Brand;
+import com.ittzg.cloud.dto.response.goods.brand.BrandAddResult;
 import com.ittzg.cloud.dto.response.goods.brand.BrandPageResult;
 import com.ittzg.cloud.goods.feign.BrandFeign;
 import io.swagger.annotations.Api;
@@ -10,11 +11,12 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.ws.rs.GET;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @Author: ittzg
@@ -69,6 +71,57 @@ public class BrandController {
         result.setResponseMSg("获取数据成功");
         logger.info("调用服务获取品牌列表花费的时间为：{}ms",System.currentTimeMillis()-begin);
         logger.info("response :{}", JSON.toJSON(brands).toString());
+        return result;
+    }
+    @PostMapping(value = "brand/addOrUpdateBrand")
+    @ApiOperation(value = "新增品牌",notes = "新增品牌")
+    public Result<BrandAddResult> addOrUpdateBrand(@RequestBody Brand brand){
+        Result<BrandAddResult> result = new Result<>();
+        BrandAddResult brandAddResult = new BrandAddResult();
+        logger.info("url:/brand/addBrand,method:{}","com.ittzg.cloud.goods.controller.BrandController.addBrand");
+        long begin = System.currentTimeMillis();
+        Map<Boolean, String> map = null;
+        try {
+            map = brandFeign.addOrUpdateBrand(brand);
+        } catch (Exception e) {
+            result.setResultData(null);
+            result.setStatusCode("405");
+            result.setResponseMSg("调用服务失败");
+            return result;
+        }
+        logger.info("调用服务添加品牌花费的时间为：{}ms",System.currentTimeMillis()-begin);
+        logger.info("response {}", map.toString());
+        for (Boolean success : map.keySet()) {
+            brandAddResult.setResponseMsg(map.get(success));
+            brandAddResult.setSuccess(success);
+            break;
+        }
+        result.setResultData(brandAddResult);
+        result.setStatusCode("200");
+        result.setResponseMSg("调用服务成功");
+        return result;
+    }
+    @GetMapping(value = "brand/findById")
+    @ApiOperation(value = "根据Id查找品牌详情",notes = "根据Id查找品牌详情")
+    public Result<Brand> findById(long id){
+        Result<Brand> result = new Result<>();
+        logger.info("url:/brand/findById,method:{}","com.ittzg.cloud.goods.controller.BrandController.findById");
+        long begin = System.currentTimeMillis();
+        Brand brand =null;
+        try {
+            brand = brandFeign.findOne(id);
+        } catch (Exception e) {
+            logger.info("{}",e.getMessage());
+            result.setResultData(null);
+            result.setStatusCode("405");
+            result.setResponseMSg("调用服务失败");
+            return result;
+        }
+        logger.info("调用服务根据Id查找品牌详情花费的时间为：{}ms",System.currentTimeMillis()-begin);
+        logger.info("response {}", JSON.toJSON(brand).toString());
+        result.setResultData(brand);
+        result.setStatusCode("200");
+        result.setResponseMSg("调用服务成功");
         return result;
     }
 }

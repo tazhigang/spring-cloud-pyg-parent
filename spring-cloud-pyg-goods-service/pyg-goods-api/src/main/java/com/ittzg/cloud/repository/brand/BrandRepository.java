@@ -27,4 +27,24 @@ public interface BrandRepository extends JpaRepository<Brand,Long>{
      * @return
      */
     Page<Brand> findAll(Pageable pageable);
+
+    /**
+     * 添加与修改
+     * @param brand
+     * @return
+     */
+    Brand saveAndFlush(Brand brand);
+
+    /**
+     * 删除
+     * @param id
+     */
+    void delete(Long id);
+
+    /**
+     * 查一个
+     * @param id
+     * @return
+     */
+    Brand getOne(Long id);
 }
