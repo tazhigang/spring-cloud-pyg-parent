@@ -56,7 +56,14 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public Map<Boolean, String> removeBrand(Brand brand) {
-        return null;
+    public Map<Boolean, String> removeAllBrandByIds(List<Long> ids) {
+        Map<Boolean, String> map = new HashMap<>();
+        try {
+            brandRepository.deleteBrand(ids);
+            map.put(true,"成功");
+        } catch (Exception e) {
+            map.put(false,"失败");
+        }
+        return map;
     }
 }

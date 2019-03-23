@@ -17,7 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,8 +83,15 @@ public class BrandController {
         logger.info("response {}", JSON.toJSON(brand).toString());
         return brand;
     }
-    /**
-     * 传递一个xml对象作为的参数并且并且对象中含有pdf文件
-     * 接受pdf文件并将其返回
-     */
+    @DeleteMapping(value = "removeBrandByIds")
+    @ApiOperation(value = "批量删除品牌名称",notes = "批量删除品牌名称")
+    public Map<Boolean,String> removeBrandByIds(Long[] ids){
+        logger.info("url:/brand/removeBrandByIds .method:{}","com.ittzg.cloud.web.brand.BrandController.removeBrandByIds");
+        long begin = System.currentTimeMillis();
+        List<Long> brandIds = Arrays.asList(ids);
+        Map<Boolean, String> map = brandService.removeAllBrandByIds(brandIds);
+        logger.info("批量删除品牌花费的时间为：{}ms",System.currentTimeMillis()-begin);
+        logger.info("response {}", JSON.toJSON(map).toString());
+        return map;
+    }
 }

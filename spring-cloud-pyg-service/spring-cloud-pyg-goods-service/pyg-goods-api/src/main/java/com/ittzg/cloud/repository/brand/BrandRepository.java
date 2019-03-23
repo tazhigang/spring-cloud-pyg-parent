@@ -4,8 +4,11 @@ import com.ittzg.cloud.model.Brand;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 /**
@@ -36,12 +39,6 @@ public interface BrandRepository extends JpaRepository<Brand,Long>{
     Brand saveAndFlush(Brand brand);
 
     /**
-     * 删除
-     * @param id
-     */
-    void delete(Long id);
-
-    /**
      * 查一个
      * @param id
      * @return
@@ -49,9 +46,12 @@ public interface BrandRepository extends JpaRepository<Brand,Long>{
     Brand getOne(Long id);
 
     /**
-     * 删除一条记录
-     * @param brand
+     * 批量删除
+     * @param ids
      */
-    void delete(Brand brand);
+    @Modifying
+    @Transactional
+    @Query("delete from Brand bd where bd.id in (?1)")
+    void deleteBrand(List<Long> ids);
 
 }

@@ -125,5 +125,33 @@ public class BrandController {
         result.setResponseMSg("调用服务成功");
         return result;
     }
-
+    @DeleteMapping(value = "/brand/removeBrandByIds")
+    @ApiOperation(value = "批量删除品牌名称",notes = "批量删除品牌名称")
+    public Result<BrandAddResult> removeBrandByIds(Long[] ids){
+        Result<BrandAddResult> result = new Result<>();
+        BrandAddResult brandAddResult = new BrandAddResult();
+        logger.info("url:/brand/removeBrandByIds,method:{},param:{}","com.ittzg.cloud.goods.controller.BrandController.removeBrandByIds",ids);
+        long begin = System.currentTimeMillis();
+        Brand brand =null;
+        Map<Boolean, String> booleanStringMap = null;
+        try {
+            booleanStringMap = brandFeign.removeBrandByIds(ids);
+        } catch (Exception e) {
+            logger.info("{}",e.getMessage());
+            result.setStatusCode("405");
+            result.setResponseMSg("调用服务失败");
+            return result;
+        }
+        logger.info("调用服务根据批量删除品牌名称花费的时间为：{}ms",System.currentTimeMillis()-begin);
+        logger.info("response {}", JSON.toJSON(booleanStringMap).toString());
+        for (Boolean success : booleanStringMap.keySet()) {
+            brandAddResult.setResponseMsg(booleanStringMap.get(success));
+            brandAddResult.setSuccess(success);
+            break;
+        }
+        result.setResultData(brandAddResult);
+        result.setStatusCode("200");
+        result.setResponseMSg("调用服务成功");
+        return result;
+    }
 }

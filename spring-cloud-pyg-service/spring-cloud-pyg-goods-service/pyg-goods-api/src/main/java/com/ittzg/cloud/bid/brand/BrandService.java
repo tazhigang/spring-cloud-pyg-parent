@@ -41,9 +41,9 @@ public interface BrandService {
     Brand findOneById(Long id);
 
     /**
-     * 删除一条数据
-     * @param brand
+     * 批量删除
+     * @param ids
      * @return
      */
-    Map<Boolean,String> removeBrand(Brand brand);
+    Map<Boolean,String> removeAllBrandByIds(List<Long> ids);
 }

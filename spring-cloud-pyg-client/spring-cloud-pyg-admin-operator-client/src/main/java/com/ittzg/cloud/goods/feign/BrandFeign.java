@@ -25,4 +25,6 @@ public interface BrandFeign {
     Map<Boolean,String> addOrUpdateBrand(@RequestBody Brand brand);
     @RequestMapping(value = "/brand/queryOneById",method = RequestMethod.GET)
     Brand findOne(@RequestParam(value = "id") long id);
+    @RequestMapping(value = "/brand/removeBrandByIds",method = RequestMethod.DELETE)
+    Map<Boolean,String> removeBrandByIds(@RequestParam(value = "ids") Long[] ids);
 }

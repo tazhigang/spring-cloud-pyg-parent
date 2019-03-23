@@ -65,7 +65,39 @@
 			$scope.empty_brand=function(){
                 $scope.brand = {}
 			}
+			$scope.brandIds = []
+			$scope.getSelectedIds = function($event,id){
+				if($event.target.checked){
+                    $scope.brandIds.push(id)
+				}else{
+                    var index = $scope.brandIds.indexOf(id)
+                    $scope.brandIds.splice(index,1)
+				}
+			}
+            $scope.removeByBrandIds = function(){
+                $http.delete("/brand/removeBrandByIds?ids="+$scope.brandIds).then(function(response){
+                    if(response.data.resultData.success){
+                        $scope.reloadList();
+                    }else{
+                        alert(response.data.resultData.responseMsg);
+                    }
+                },function(response) {
+                    alert("连接失败")
+                })
+            }
         });
+        $(function () {
+            $("#selall").click(function () {//全选
+                var bool = $("#selall").is(":checked")
+				if(bool){
+                    $("#showAllBrand :checkbox").prop("checked", true);
+				}else{
+                    $("#showAllBrand :checkbox").prop("checked", false);
+				}
+
+            });
+        });
+
 	</script>
 
     
@@ -86,7 +118,7 @@
                                 <div class="form-group form-inline">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-default" title="新建" data-toggle="modal" data-target="#editModal" ng-click="empty_brand()"><i class="fa fa-file-o"></i> 新建</button>
-                                        <button type="button" class="btn btn-default" title="删除" ><i class="fa fa-trash-o"></i> 删除</button>           
+                                        <button type="button" class="btn btn-default" title="删除" ng-click="removeByBrandIds()"><i class="fa fa-trash-o" ></i> 删除</button>
                                         <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
                                     </div>
                                 </div>
@@ -103,7 +135,7 @@
 			                      <thead>
 			                          <tr>
 			                              <th class="" style="padding-right:0px">
-			                                  <input id="selall" type="checkbox" class="icheckbox_square-blue">
+			                                  <input id="selall" type="checkbox" class="icheckbox_square-blue" ng-click="selectAll($event)">
 			                              </th> 
 										  <th class="sorting_asc">品牌ID</th>
 									      <th class="sorting">品牌名称</th>									      
@@ -111,9 +143,9 @@
 					                      <th class="text-center">操作</th>
 			                          </tr>
 			                      </thead>
-			                      <tbody>
+			                      <tbody  id="showAllBrand">
 									  <tr ng-repeat="brand in brands">
-			                              <td><input  type="checkbox"></td>			                              
+			                              <td><input  type="checkbox" ng-click="getSelectedIds($event,brand.id)" name="brandSelect"></td>
 				                          <td>{{brand.id}}</td>
 									      <td>{{brand.name}}</td>
 		                                  <td>{{brand.firstChar}}</td>
@@ -125,7 +157,6 @@
 			                  </table>
 			                  <!--数据列表/-->
 							  <tm-pagination conf="paginationConf"></tm-pagination>
-							 
                         </div>
                         <!-- 数据表格 /-->
                         

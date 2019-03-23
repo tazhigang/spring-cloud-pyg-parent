@@ -12,8 +12,8 @@ import javax.persistence.*;
  * @Description: 品牌的实体类
  */
 @Entity
-@Table(name="tb_brand")
 @ApiModel
+@Table(name="tb_brand")
 @JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
 public class Brand {
     @ApiModelProperty(value = "品牌的id",notes = "品牌的id",example = "1")

@@ -11,7 +11,7 @@ import java.util.*;
 /**
  * @Author: ittzg
  * @CreateDate: 2019/2/27 22:24
- * @Description:
+ * @Description: 测试调用第三方接口上传下载超文本资源
  */
 public class TestUpload {
     public static void main(String[] args) {
