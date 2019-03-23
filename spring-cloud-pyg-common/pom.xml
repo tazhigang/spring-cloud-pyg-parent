@@ -14,7 +14,14 @@
         <project.sourceEncoding>UTF-8</project.sourceEncoding>
         <java.version>1.8</java.version>
     </properties>
-
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.itextpdf/itext-pdfa -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itext-pdfa</artifactId>
+            <version>5.5.7</version>
+        </dependency>
+    </dependencies>
     <parent>
         <artifactId>spring-cloud-pyg-parent</artifactId>
         <groupId>com.ittzg.cloud</groupId>

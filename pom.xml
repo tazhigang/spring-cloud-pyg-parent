@@ -17,15 +17,9 @@
     <modules>
         <module>spring-cloud-pyg-common</module>
         <module>spring-cloud-pyg-config</module>
-        <module>spring-cloud-pyg-cart-service</module>
-        <module>spring-cloud-pyg-goods-service</module>
-        <module>spring-cloud-pyg-pay-service</module>
-        <module>spring-cloud-pyg-seckill-service</module>
-        <module>spring-cloud-pyg-user-service</module>
-        <module>spring-cloud-pyg-admin-operator-client</module>
-        <module>spring-cloud-pyg-admin-merchant-client</module>
-        <module>spring-cloud-pyg-client</module>
         <module>spring-cloud-pyg-discover-eureka</module>
+        <module>spring-cloud-pyg-client</module>
+        <module>spring-cloud-pyg-service</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

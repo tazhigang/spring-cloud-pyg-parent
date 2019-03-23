@@ -3,50 +3,25 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>com.ittzg.cloud</groupId>
     <artifactId>spring-cloud-pyg-client</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <name>spring-cloud-pyg-client</name>
+
     <properties>
         <project.sourceEncoding>UTF-8</project.sourceEncoding>
         <java.version>1.8</java.version>
     </properties>
-
+    <modules>
+        <module>spring-cloud-pyg-admin-merchant-client</module>
+        <module>spring-cloud-pyg-admin-operator-client</module>
+        <module>spring-cloud-pyg-web-client</module>
+    </modules>
     <parent>
-        <artifactId>spring-cloud-pyg-parent</artifactId>
         <groupId>com.ittzg.cloud</groupId>
+        <artifactId>spring-cloud-pyg-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-client</artifactId>
-            <version>1.19.1</version>
-        </dependency>
-    </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 </project>
